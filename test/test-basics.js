@@ -123,7 +123,7 @@ describe('bleach', function () {
         bleach.clean(s).should.equal('');
       });
     
-      it('should strip the fuck outta some tags', function () {
+      it('should strip the **** outta some tags', function () {
         var s;
         bleach.clean('a test <em>with</em> <b>html</b> tags', {strip: true}).should.equal('a test <em>with</em> <b>html</b> tags');
         eq_('a test <em>with</em>  <b>html</b> tags', bleach.clean('a test <em>with</em> <img src="http://example.com/"> <b>html</b> tags', strip=True))
