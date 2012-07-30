@@ -149,9 +149,11 @@ describe('bleach', function () {
           , STYLE = ['color']
           , blank = '<b style=""></b>'
           , s = '<b style="color: blue;"></b>';
-        bleach.clean('<b style="top:0"></b>', {attributes: ATTR}).should.equal(blank);
+        bleach.clean('<b style="top:0"></b>', {attributes: ATTR})
+              .should.equal(blank);
         bleach.clean(s, {attributes: ATTR, styles: STYLE}).should.equal(s);
-        bleach.clean('<b style="top: 0; color: blue;"></b>', {attributes: ATTR, styles: STYLE}).should.equal(s);
+        bleach.clean('<b style="top: 0; color: blue;"></b>',
+                     {attributes: ATTR, styles: STYLE}).should.equal(s);
       });
 
       it('should be an idempotent transformation', function () {
