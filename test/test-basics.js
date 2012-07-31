@@ -1,7 +1,6 @@
 var mocha = require('mocha')
   , bleach = require('../')
-  , should = require('should')
-  , _ = require('underscore');
+  , should = require('should');
 
 describe('bleach', function () {
   describe('cleaning', function () {
