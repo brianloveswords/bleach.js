@@ -1,0 +1,98 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <title>Paste stuff into content-editable, see it sanitized</title>
+   <!-- Loaded as Bleach global -->
+  <script type="application/javascript" src="../lib/bleach.js"></script>
+<style type="text/css">
+  #source {
+    border: 1px dashed gray;
+  }
+  #settings {
+    width: 100%;
+    height: 20em;
+  }
+  #html-target {
+  }
+  #text-target {
+    width: 100%;
+    height: 20em;
+  }
+  .badjson {
+    border: 1px solid red;
+    background-color: pink;
+  }
+</style>
+<script type="application/javascript">
+function bleachActionMetaphor() {
+  var settingsNode = document.getElementById('settings'),
+      htmlNode = document.getElementById('html-target'),
+      textNode = document.getElementById('text-target'),
+      srcNode = document.getElementById('source'),
+      opts;
+
+  try {
+    opts = JSON.parse(settings.value);
+  }
+  catch(ex) {
+    settingsNode.classList.add('badjson');
+    textNode.value = 'settings are sad: ' + ex;
+    return;
+  }
+  settingsNode.classList.remove('badjson');
+
+  // clean out the target
+  htmlNode.innerHTML = '';
+
+  // our bleaching process is mutating, so clone it.
+  var mutateNode = srcNode.cloneNode(true);
+  mutateNode.removeAttribute('id');
+  mutateNode.removeAttribute('contenteditable');
+
+  // We don't catch this here so your browser can catch the exceptions...
+  Bleach.cleanNode(mutateNode, opts);
+  
+  // Append the child directly rather than splicing its contents in.  Because
+  // of laziness.
+  htmlNode.appendChild(mutateNode);
+  textNode.value = mutateNode.innerHTML;
+}
+window.onload = bleachActionMetaphor;
+</script>
+</head>
+<body>
+  <div>
+    The thing below is contenteditable.  You paste stuff into it, it gets
+    sanitized, the sanitized version and its source show up below that.  You
+    judge whether it worked.  This good idea is thanks to
+    <a href="https://github.com/gbirke/Sanitize.js/">Sanitize.js</a>.  I
+    would have just made you type stuff into a textarea or something
+    ridiculous like that!
+  </div>
+  <h3>Settings (JSON)</h3>
+<textarea id="settings" oninput="bleachActionMetaphor();">{
+  "tags": ["a", "abbr", "acronym", "b", "blockquote", "code",
+           "em", "i", "li", "ol", "span", "strong", "ul"],
+  "attributes": {
+    "*": "style"
+  },
+  "styles": ["color", "background-color"],
+  "strip": true,
+  "stripComments": true
+}
+</textarea>
+  <h3>Source</h3>
+  <div id="source" contenteditable="true"
+       onpaste="setTimeout(bleachActionMetaphor, 0);">
+    <h3>I am the <font size="large">EVIL</font>, <blink>EVIL</blink>,
+    <img src="http://evil.example.com/evil.png"> default.
+    <span style="font-size: 200%; color: red; background-color: gray; border: 10px solid black;">OF <div style="font-size: 300%; color: blue;">EVIL</div>!</span>
+  </div>
+  <h3>Sanitized as HTML</h3>
+  <div id="html-target">
+  </div>
+  <h3>Sanitized as Text</h3>
+  <textarea id="text-target">
+  </textarea>
+</body>
+</html>
