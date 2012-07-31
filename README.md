@@ -1,4 +1,4 @@
-bleach.js is a port of Bleach (https://github.com/jsocol/bleach), the whitelist
+bleach.js is an INCOMPLETE port of Bleach (https://github.com/jsocol/bleach), the whitelist
 based HTML sanitizer.  It runs on node.js using jsdom, in the browser as a
 single file that contributes "Bleach" to the global environment, or as an AMD
 (Asynchronous Module Definition, https://github.com/amdjs/amdjs-api/wiki/AMD).
