@@ -7,7 +7,7 @@ single file that contributes "Bleach" to the global environment, or as an AMD
 
 ## Tests ##
 
-To test, use mocha: http://visionmedia.github.com/mocha/
+To test, use mocha: https://mochajs.org/
 
 Run "npm install -g mocha", then you can invoke "mocha" in the root dir
 to run the tests.
